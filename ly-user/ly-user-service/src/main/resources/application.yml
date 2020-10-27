@@ -1,0 +1,43 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/leyou
+    username: root
+    password: 123456
+
+  redis:
+    host: 127.0.0.1
+  rabbitmq:
+    host: 127.0.0.1
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true
+        max-interval: 210000ms
+        initial-interval: 10000ms
+        multiplier: 2
+    publisher-confirms: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 15
+
+
+mybatis:
+  type-aliases-package: com.leyou.user.pojo
+ribbon:
+  eager-load:
+    enabled: true

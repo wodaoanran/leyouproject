@@ -1,0 +1,36 @@
+package com.leyou.goodsweb.controller;
+
+import com.leyou.goodsweb.service.GoodsHtmlService;
+import com.leyou.goodsweb.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
+
+@Controller
+@RequestMapping("item")
+public class GoodsController {
+
+    @Autowired
+    private  GoodsService goodsService;
+    @Autowired
+    private GoodsHtmlService goodsHtmlService;
+
+
+    @GetMapping("{id}.html")
+    public String toHtmlPage(@PathVariable("id") Long id, Model model){
+
+        Map<String, Object> modelMap = goodsService.lodelModel(id);
+        model.addAllAttributes(modelMap);
+
+        goodsHtmlService.asyncExcute(id);
+
+        return "item";
+
+    }
+}

@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: cart-service
+      profile: dec
+      label: master
+      uri: http://127.0.0.1:10011
